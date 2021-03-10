@@ -1,0 +1,54 @@
+version: '3'
+
+networks:
+    docker_net0:
+        driver: bridge
+    ipam:
+        driver: default
+
+services:
+    mongodb:
+      image: mongo:latest
+      container_name: ${MONGO_CONTAINER_NAME}
+      hostname: mongodb
+      environment: 
+        - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      networks:
+        - docker_net0
+      ports:
+        - "${MONGODB_PORT}:27017"
+      volumes:
+        - ./data/:/data/db
+      command: mongod
+        
+    jupyterlab:
+        build: 
+            context: ./jupyterlab_GPU
+            args:
+              - UID=${UID}
+              - GID=${GID}
+              - USER=${USER}
+        deploy:
+            resources:
+              reservations:
+                devices:
+                  - capabilities: 
+                      - gpu
+        container_name: ${JUPYTERLAB_CONTAINER_NAME}
+        networks:
+            - docker_net0
+        environment: 
+            - JUPYTER_ENABLE_LAB=yes
+            - GRANT_SUDO=yes
+            - NB_UID=${UID}
+            - NB_GID=${GID}
+            - JUPYTER_TOKEN=${JUPYTER_PASSWORD}
+        user: ${UID}:${GID}
+        volumes:
+            - "${PWD}:/home/${USER}/work"
+        env_file:
+            - .env
+        ports:
+            - "${JUPYTERLAB_PORT}:8888"
+        restart: always
