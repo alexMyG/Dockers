@@ -47,7 +47,7 @@ UID=${UID} GID=${GID} USER=${USER} docker-compose --env-file .env up -d --build
 You can avoid passing UID, GID and USER by assigning your account's values into the env file
 
 
-> :warning: **These images are prepared to create a user in the container that matches the host user.**: This avoids files permissions problems. The image is built with the UID, GID and USER variables of the host user. These means that future instances of the same image will inherit the data of the user that built the image. In that case, use a new project and image names.
+> :warning: **These images are prepared to create a user in the container that matches the host user.**: This avoids files permissions problems. The image is built with the UID, GID and USER variables of the host user. This means that future instances of the same image will inherit the data of the user that built the image. To avoid that, use a new project and image names.
 > If you need to rebuild the image use:
 
 ```docker-compose --env-file .env build --no-cache```
