@@ -1,6 +1,6 @@
 # Collection of docker compose templates
 
-### Jupyterlab
+### Template 1: Jupyterlab
 
 
 You need a ".env" file with the following content:
@@ -12,7 +12,7 @@ JUPYTERLAB_PORT="JUPTERLAB PORT"
 ```
 
 
-### Jupyterlab + MONGODB
+### Template 2: Jupyterlab + MONGODB
 
 You need a ".env" file with the following content:
 
