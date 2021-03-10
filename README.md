@@ -12,7 +12,7 @@ JUPYTERLAB_PORT="JUPTERLAB PORT"
 ```
 
 
-## Jupyterlab + MONGODB
+### Jupyterlab + MONGODB
 
 You need a ".env" file with the following content:
 
