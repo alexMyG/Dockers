@@ -15,7 +15,7 @@ RUN apt update
 
 RUN apt -y install zsh wget sudo nano
 
-# Defining ARG variables passed from docker-compose
+# Defining ARG variables passed from docker-compose
 ARG UID
 ARG GID
 ARG USER
@@ -34,9 +34,6 @@ RUN adduser $USER sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER $USER
-
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.1/zsh-in-docker.sh)" -- \
-    -t agnoster
 
 WORKDIR /home/$USER/work
 

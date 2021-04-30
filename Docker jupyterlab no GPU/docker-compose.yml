@@ -1,0 +1,36 @@
+version: '3'
+
+networks:
+  docker_net0:
+    driver: bridge
+    ipam:
+      driver: default
+
+services:
+    jupyterlab:
+      build: 
+        context: ./jupyterlab
+        args:
+          - UID=${UID}
+          - GID=${GID}
+          - USER=${USER}
+      container_name: ${CONTAINER_NAME}
+      networks:
+        - docker_net0
+      environment: 
+        - JUPYTER_ENABLE_LAB=yes
+        - GRANT_SUDO=yes
+        - NB_UID=${UID}
+        - NB_GID=${GID}
+        - JUPYTER_TOKEN=${JUPYTER_PASSWORD}
+      user: ${UID}:${GID}
+      volumes:
+        - "${PWD}:/home/${USER}/work"
+      env_file:
+        - .env
+      ports:
+        - "${JUPYTERLAB_PORT}:8888"
+      restart: always
+
+
+
